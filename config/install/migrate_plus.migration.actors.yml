@@ -1,0 +1,31 @@
+id: actors
+
+dependencies:
+  enforced:
+    # List here the name of the module that provided this migration if you want
+    # this config to be removed when that module is uninstalled.
+    module:
+      - migrate_csv_d8_custom
+
+source:
+  plugin: csv
+  path: actors.csv
+  header_row_count: 1
+  keys:
+    - id
+
+destination:
+  plugin: entity:node
+
+process:
+  nid: id
+  title: name
+  type:
+    plugin: default_value
+    default_value: actors
+  uid:
+    plugin: default_value
+    default_value: 1
+  status:
+    plugin: default_value
+    default_value: 1

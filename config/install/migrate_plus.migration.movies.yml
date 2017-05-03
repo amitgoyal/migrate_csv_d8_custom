@@ -1,0 +1,55 @@
+id: movies
+
+dependencies:
+  enforced:
+    # List here the name of the module that provided this migration if you want
+    # this config to be removed when that module is uninstalled.
+    module:
+      - migrate_csv_d8_custom
+
+source:
+  plugin: csv
+  path: movies.csv
+  header_row_count: 1
+  keys:
+    - id
+
+destination:
+  plugin: entity:node
+
+process:
+  #nid: id #conflicts with id of actors.
+  title: title
+  body: plot
+  field_actors:
+    -
+      plugin: explode
+      source: actors
+      delimiter: ,
+    -
+      plugin: migration
+      migration: actors
+#  field_actors:
+#    -
+#      plugin: explode
+#      source: actors
+#      delimiter: ,
+#    -
+#      plugin: entity_lookup
+#      value_key: nid
+#      bundle_key: nid
+#      bundle: actors
+#      entity_type: node
+  type:
+    plugin: default_value
+    default_value: movies
+  uid:
+    plugin: default_value
+    default_value: 1
+  status:
+    plugin: default_value
+    default_value: 1
+
+migration_dependencies:
+  required:
+    - actors
