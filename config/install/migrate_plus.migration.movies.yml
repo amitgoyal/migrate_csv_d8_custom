@@ -27,7 +27,7 @@ process:
       source: actors
       delimiter: ,
     -
-      plugin: migration
+      plugin: migration_lookup
       migration: actors
 #  field_actors:
 #    -
